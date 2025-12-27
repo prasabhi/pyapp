@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t chatbot-app -f docker/Dockerfile .'
+            }
+        }
+
+        stage('Run Containers') {
+            steps {
+                sh 'docker compose -f docker-compose.yml up -d'
+            }
+        }
+    }
+}
