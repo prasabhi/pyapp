@@ -1,26 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "chatbot-app"
-    }
-
     stages {
-
-        stage('Checkout') {
-            steps {
-                // Explicit checkout to ensure correct workspace
-                git branch: 'master',
-                    url: 'https://github.com/prasabhi/pyapp.git'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
                 sh '''
-                  docker build \
-                  -t ${IMAGE_NAME}:latest \
-                  -f docker/Dockerfile .
+                    docker build \
+                      -t chatbot-app \
+                      -f chatbot/docker/Dockerfile \
+                      .
                 '''
             }
         }
@@ -28,19 +17,20 @@ pipeline {
         stage('Run Containers') {
             steps {
                 sh '''
-                  docker compose down || true
-                  docker compose up -d
+                    docker compose \
+                      -f docker-compose.yml \
+                      up -d
                 '''
             }
         }
     }
 
     post {
-        always {
-            echo "Pipeline completed"
+        success {
+            echo 'Pipeline completed successfully'
         }
         failure {
-            echo "Pipeline failed"
+            echo 'Pipeline failed'
         }
     }
 }
