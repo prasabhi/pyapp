@@ -1,26 +1,15 @@
 pipeline {
     agent any
 
-    options {
-        skipDefaultCheckout(true)   // ⛔ Disable Jenkins auto git checkout
-    }
-
     stages {
-
-        stage('Checkout Source') {
-            steps {
-                // Explicit checkout (clean & controlled)
-                git url: 'https://github.com/prasabhi/pyapp.git', branch: 'master'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
                 sh '''
                   docker build \
-                    -t chatbot-app \
-                    -f chatbot/docker/Dockerfile \
-                    .
+                  -t chatbot-app \
+                  -f chatbot/docker/Dockerfile \
+                  .
                 '''
             }
         }
@@ -28,7 +17,9 @@ pipeline {
         stage('Run Containers') {
             steps {
                 sh '''
-                  docker compose up -d
+                  docker-compose \
+                  -f chatbot/docker-compose.yml \
+                  up -d
                 '''
             }
         }
