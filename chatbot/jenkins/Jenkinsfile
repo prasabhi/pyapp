@@ -17,7 +17,7 @@ pipeline {
         stage('Run Containers') {
             steps {
                 sh '''
-                  docker-compose \
+                  docker compose \
                   -f chatbot/docker-compose.yml \
                   up -d
                 '''
