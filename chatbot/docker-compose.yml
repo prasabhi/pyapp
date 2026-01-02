@@ -31,7 +31,7 @@ services:
 
   jenkins:
     image: jenkins/jenkins:lts
-    container_name: jenkins
+    container_name: jenkins-new
     user: root
     ports:
       - "8080:8080"
