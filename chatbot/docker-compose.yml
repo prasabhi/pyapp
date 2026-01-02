@@ -21,7 +21,6 @@ services:
     image: prom/prometheus
     volumes:
       - ./monitoring:/etc/prometheus
-      - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
