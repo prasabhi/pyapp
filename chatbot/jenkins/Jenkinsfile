@@ -19,7 +19,7 @@ pipeline {
                 dir('chatbot'){
                 sh '''
                   docker compose \
-                  -f chatbot/docker-compose.yml \
+                  -f docker-compose.yml \
                   up -d
                 '''
                 }
