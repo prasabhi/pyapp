@@ -16,11 +16,13 @@ pipeline {
 
         stage('Run Containers') {
             steps {
+                dir('chatbot'){
                 sh '''
                   docker compose \
                   -f chatbot/docker-compose.yml \
                   up -d
                 '''
+                }
             }
         }
     }
