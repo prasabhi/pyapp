@@ -19,10 +19,6 @@ services:
 
   prometheus:
     image: prom/prometheus
-    volumes:
-      - /var/jenkins_home/workspace/chatbot-ci/chatbot/monitoring:/etc/prometheus
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
 
