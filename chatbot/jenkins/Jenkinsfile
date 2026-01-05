@@ -17,11 +17,10 @@ pipeline {
         stage('Run Containers') {
             steps {
                 sh '''
-                  cd chatbot
-                  pwd
-                  ls -l
-                  ls -l monitoring
-                  docker compose up
+                  test -f monitoring/prometheus.yml
+                  docker compose \ 
+                  -f chatbot/docker-compose.yml \ 
+                  up -d
                 '''
             }
         }
