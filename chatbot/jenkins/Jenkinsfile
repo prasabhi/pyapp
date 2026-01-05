@@ -18,8 +18,8 @@ pipeline {
             steps {
                 sh '''
                   test -f monitoring/prometheus.yml
-                  docker compose \ 
-                  -f chatbot/docker-compose.yml \ 
+                  docker compose \
+                  -f chatbot/docker-compose.yml \
                   up -d
                 '''
             }
