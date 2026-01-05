@@ -3,18 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh '''
@@ -28,11 +16,13 @@ pipeline {
 
         stage('Run Containers') {
             steps {
-                dir('chatbot') {
-                    sh '''
-                      docker compose down -v || true
-                      docker compose up -d
-                    '''
+                dir('chatbot'){
+                sh '''
+                  docker compose \
+                  --project-directory chatbot \
+                  -f docker-compose.yml \
+                  up -d
+                '''
                 }
             }
         }
@@ -44,9 +34,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed'
-            sh '''
-              docker compose logs prometheus || true
-            '''
         }
     }
 }
