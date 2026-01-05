@@ -21,9 +21,7 @@ pipeline {
                   pwd
                   ls -l
                   ls -l monitoring
-                  docker compose \
-                  --project-directory chatbot \
-                  up
+                  docker compose up
                 '''
             }
         }
