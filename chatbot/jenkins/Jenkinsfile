@@ -16,14 +16,15 @@ pipeline {
 
         stage('Run Containers') {
             steps {
-                dir('chatbot'){
                 sh '''
+                  cd chatbot
+                  pwd
+                  ls -l
+                  ls -l monitoring
                   docker compose \
                   --project-directory chatbot \
-                  -f docker-compose.yml \
-                  up -d
+                  up
                 '''
-                }
             }
         }
     }
