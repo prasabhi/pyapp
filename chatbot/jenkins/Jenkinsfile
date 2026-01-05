@@ -16,13 +16,23 @@ pipeline {
 
         stage('Run Containers') {
             steps {
-                sh '''
-                  test -f monitoring/prometheus.yml
-                  docker compose \
-                  -f chatbot/docker-compose.yml \
-                  up -d
-                '''
-            }
+                    sh '''
+                    set -eux
+
+                    cd chatbot
+
+                    echo "Current directory:"
+                    pwd
+
+                    echo "Monitoring directory contents:"
+                    ls -l monitoring
+
+                    test -f monitoring/prometheus.yml
+
+                    docker compose down -v || true
+                    docker compose up -d
+                    '''
+                }
         }
     }
 
